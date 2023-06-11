@@ -1,0 +1,4 @@
+.activeTab {
+  background-color: var(--primary-300);
+  color: white;
+}

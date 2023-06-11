@@ -1,0 +1,19 @@
+.list {
+  padding: 0.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__header img {
+  cursor: pointer;
+}
