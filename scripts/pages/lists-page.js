@@ -1,11 +1,10 @@
 import { tokenKey, root } from "../config.js";
-import { createCard, deleteCard } from "../services/cards-service.js";
 import { deleteList, createList } from "../services/lists-service.js";
 import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
 
-const sortByPos = (a, b) => a.pos - b.pos;
+// const sortByPos = (a, b) => a.pos - b.pos;
 // const sortByID = (a, b) => a.id - b.id
 
 // render - START
@@ -17,18 +16,8 @@ function renderHeader() {
   `;
 }
 
-function renderCard(card) {
-  return `
-  <div class="card js-card" data-id="${card.id}">
-    <p>${card.title}</p>
-    <img src="/assets/icons/trash.svg" alt="trash" class="js-card-trash"/>
-  </div>
-  `;
-}
-
 function renderList(list) {
-  const cards = list.cards;
-  const sortedCards = cards.sort(sortByPos);
+  // const sortedCards = cards.sort(sortByPos);
 
   return `
     <div class="list js-list" data-id="${list.id}">
@@ -39,8 +28,6 @@ function renderList(list) {
       <hr class="full-width m-0" />
       <div class="card-list js-list-container" data-listName="${list.name}">
         
-        ${sortedCards.map(renderCard).join("")}
-      
       </div>
       <form action="" class="card-form js-card-form" data-list-id="${list.id}">
         <input 
@@ -68,7 +55,7 @@ function renderList(list) {
 
 function render() {
   const lists = STORE.lists;
-  const sortedList = lists.sort(sortByPos);
+  // const sortedList = lists.sort(sortByPos);
 
   return `
     ${renderHeader()}
@@ -78,7 +65,7 @@ function render() {
       data-listName="lists"
     >
 
-      ${sortedList.map(renderList).join("")}
+      ${lists.map(renderList).join("")}
 
       <div class="list" data-id="form">
         <form action="" class="card-form js-list-form">
@@ -115,56 +102,6 @@ function listenLogout() {
   button.addEventListener("click", (event) => {
     sessionStorage.removeItem(tokenKey);
     DOMHandler.load(LoginPage(), root);
-  });
-}
-
-function listenSubmitCard() {
-  const cardForms = document.querySelectorAll(".js-card-form");
-
-  cardForms.forEach((form) => {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const { title } = event.target.elements;
-      const listId = +event.target.dataset.listId;
-
-      try {
-        // Estamos guardando en la base de datos
-        // y retornando el newCard
-        const newCard = await createCard(listId, { title: title.value });
-        // Almacenando en el STORE la nueva card guardada.
-        STORE.addCard(listId, newCard);
-
-        DOMHandler.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  });
-}
-
-function listenCardTrash() {
-  const listDivs = document.querySelectorAll(".js-list");
-
-  listDivs.forEach((list) => {
-    list.addEventListener("click", async (event) => {
-      const cardTrash = event.target.closest(".js-card-trash");
-
-      if (!cardTrash) return;
-
-      const card = cardTrash.closest(".js-card");
-      const cardId = +card.dataset.id;
-      const listId = +list.dataset.id;
-
-      try {
-        await deleteCard(listId, cardId);
-        STORE.deleteCard(listId, cardId);
-
-        DOMHandler.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    });
   });
 }
 
@@ -216,8 +153,6 @@ function ListPage() {
     },
     addListeners() {
       listenLogout();
-      listenSubmitCard();
-      listenCardTrash();
       listenListTrash();
       listenSubmitForm();
     },

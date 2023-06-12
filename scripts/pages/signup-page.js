@@ -57,7 +57,7 @@ function listenSubmit() {
     const { username, password } = event.target.elements;
 
     const credentials = {
-      username: username.value,
+      email: username.value,
       password: password.value,
     };
 
@@ -73,9 +73,7 @@ function listenSubmit() {
 
       DOMHandler.load(ListPage(), root);
     } catch (error) {
-      const formErrors = JSON.parse(error.message);
-      this.state.errors = formErrors;
-
+      this.state.errors.form = error.message;
       DOMHandler.reload();
     }
   });

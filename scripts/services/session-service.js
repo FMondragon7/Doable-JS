@@ -1,16 +1,19 @@
-// Fetch => => Mock Fetch => Simular un Fetch => Retornan Promesas
-// Mock Fetch Jest
+import { base_uri } from "../config.js";
 
-export function login({ username, password } = {}) {
-  return new Promise((resolve, reject) => {
-    if (username === "testino" && password === "letmein") {
-      resolve({
-        username,
-        email: "testino@mail.com",
-        token: "super_secret_token_1234",
-      });
-    } else {
-      reject(new Error("Invalid credentials"));
-    }
+export async function login(credentials) {
+  const response = await fetch(`${base_uri}/login`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(credentials),
   });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error);
+  }
+
+  const data = await response.json();
+  return data;
 }

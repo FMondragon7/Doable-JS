@@ -2,7 +2,6 @@ import { input } from "../components/input.js";
 import { login } from "../services/session-service.js";
 import { tokenKey, root } from "../config.js";
 import { getLists } from "../services/lists-service.js";
-
 import DOMHandler from "../dom-handler.js";
 import ListPage from "./lists-page.js";
 import STORE from "../store.js";
@@ -58,7 +57,7 @@ function listenSubmit() {
     const { username, password } = event.target.elements;
 
     const credentials = {
-      username: username.value,
+      email: username.value,
       password: password.value,
     };
 
@@ -70,6 +69,7 @@ function listenSubmit() {
       STORE.setCurrentPage("lists");
 
       const lists = await getLists();
+      console.log(lists);
       STORE.setLists(lists);
 
       DOMHandler.load(ListPage(), root);

@@ -1,21 +1,21 @@
-import { tokenKey } from "../config.js";
+import { tokenKey, base_uri } from "../config.js";
 
-export function createUser({ username, password } = {}) {
-  return new Promise((resolve, reject) => {
-    const errors = {};
-    if (!username) errors.username = "can't be blank";
-    if (!password) errors.password = "can't be blank";
-
-    if (Object.keys(errors).length > 0) {
-      reject(new Error(JSON.stringify(errors)));
-    } else {
-      resolve({
-        username,
-        email: "testino@mail.com",
-        token: "super_secret_token_1234",
-      });
-    }
+export async function createUser(credentials) {
+  const response = await fetch(`${base_uri}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(credentials),
   });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error);
+  }
+
+  const data = await response.json();
+  return data;
 }
 
 export function getUser() {

@@ -1,40 +1,26 @@
-import { tokenKey } from "../config.js";
-
-const initialData = [
-  {
-    id: 1646205111298,
-    name: "First list",
-    pos: 1,
-    cards: [
-      { id: 1646205111299, title: "Note 1.1", pos: 1 },
-      { id: 1646205111300, title: "Note 1.2", pos: 0 },
-      { id: 1646205111301, title: "Note 1.3", pos: 2 },
-    ],
-  },
-  {
-    id: 1646205111302,
-    name: "Second list",
-    pos: 0,
-    cards: [
-      { id: 1646205111303, title: "Note 2.1", pos: 2 },
-      { id: 1646205111304, title: "Note 2.2", pos: 0 },
-      { id: 1646205111305, title: "Note 2.3", pos: 1 },
-    ],
-  },
-];
+import { tokenKey, base_uri } from "../config.js";
 
 const listsKey = "trackable_list";
 
 export async function getLists() {
   const token = sessionStorage.getItem(tokenKey);
 
-  if (!token) return Promise.reject(new Error("Access denied"));
+  const response = await fetch(`${base_uri}/tasks`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token token=${token}`,
+    },
+  });
 
-  let data = JSON.parse(localStorage.getItem(listsKey));
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error);
+  }
 
-  if (!data) localStorage.setItem(listsKey, JSON.stringify(initialData));
+  const data = await response.json();
 
-  return Promise.resolve(data || initialData);
+  return data;
 }
 
 export async function createList({ name }) {
