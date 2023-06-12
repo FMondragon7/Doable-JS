@@ -12,6 +12,7 @@ function renderHeader() {
   return `
     <header class="bg-gray-200 p-y-3 flex justify-center">
       <img src="/assets/images/doable-logo.png" alt="doable logo" />
+      <img src="/assets/images/logout-logo.png" alt="logout logo" class="js-logout logout" />
     </header>
   `;
 }
@@ -59,7 +60,6 @@ function render() {
 
   return `
     ${renderHeader()}
-    <button class="button button--sm js-logout">Log out</button>
     <section
       class="section-sm flex gap-8 items-start wrap js-lists-container"
       data-listName="lists"
@@ -68,24 +68,28 @@ function render() {
       ${lists.map(renderList).join("")}
 
       <div class="list" data-id="form">
-        <form action="" class="card-form js-list-form">
+        <form action="" class="task-form js-list-form">
           <input 
             type="text" 
             class="card-form__input" 
-            placeholder="new list" 
+            placeholder="do the dishes.." 
+            id="name"
+            name="name"
+            require
+          />
+          <input 
+            type="date" 
+            class="card-form__input" 
+            placeholder="mm / dd / yy" 
             id="name"
             name="name"
             require
           />
           <button 
             type="submit"
-            class="button button--secondary button--sm button--only-icon"
+            class="button button--primary button--lg full-width"
           >
-            <img
-              src="/assets/icons/plus.svg"
-              alt="mail icon"
-              class="button__icon"
-            />
+          Add Task
           </button>
         </form>
       </div>

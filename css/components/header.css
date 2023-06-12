@@ -49,6 +49,12 @@
   display: none;
 }
 
+.logout {
+  position: absolute;
+  right: 1%;
+  opacity: 50%;
+}
+
 @media screen and (max-width: 768px) {
   .navbar-icons {
     display: block;

@@ -17,6 +17,7 @@ function render() {
           ${input({
             label: "email",
             id: "username",
+            value: "fernando@hotmail.com",
             required: true,
             placeholder: "you@example.com",
           })}
@@ -24,6 +25,7 @@ function render() {
             label: "Password",
             id: "password",
             required: true,
+            value: "123456",
             type: "password",
             placeholder: "******",
           })}
