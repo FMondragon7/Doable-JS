@@ -23,16 +23,16 @@
 
 /* Button Primary */
 .button--primary {
-  background-color: var(--primary-300);
+  background-color: var(--primary-500);
   color: white;
 }
 
 .button--primary:hover {
-  background-color: var(--primary-400);
+  background-color: var(--primary-600);
 }
 
 .button--primary:focus {
-  outline: 2px solid var(--primary-300);
+  outline: 2px solid var(--primary-500);
   outline-offset: 2px;
 }
 
