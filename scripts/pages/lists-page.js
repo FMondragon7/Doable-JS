@@ -23,11 +23,11 @@ function renderList(list) {
   return `
     <div class="list js-list" data-id="${list.id}">
       <div class="list__header">
-        <h2 class="heading heading--xs">${list.name}</h2>
+        <h2 class="heading heading--xs">${list.title}</h2>
         <img src="/assets/icons/trash.svg" alt="trash" class="js-list-trash" />
       </div>
       <hr class="full-width m-0" />
-      <div class="card-list js-list-container" data-listName="${list.name}">
+      <div class="card-list js-list-container" data-listName="${list.title}">
         
       </div>
       <form action="" class="card-form js-card-form" data-list-id="${list.id}">
