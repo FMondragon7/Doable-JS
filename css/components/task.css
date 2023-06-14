@@ -1,4 +1,4 @@
-.list {
+.task {
   padding: 0.5rem;
   border-radius: 8px;
   width: 280px;
@@ -7,12 +7,12 @@
   gap: 1rem;
 }
 
-.list__header {
+.task__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.list__header img {
+.task__header img {
   cursor: pointer;
 }

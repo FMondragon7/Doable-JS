@@ -1,16 +1,16 @@
 import { tokenKey, root } from "./config.js";
 import { getUser } from "./services/users-service.js";
-import { getLists } from "./services/lists-service.js";
+import { getTasks } from "./services/tasks-service.js";
 import STORE from "./store.js";
 import LoginPage from "./pages/login-page.js";
 import SignupPage from "./pages/signup-page.js";
-import ListPage from "./pages/lists-page.js";
+import TaskPage from "./pages/tasks-page.js";
 import DOMHandler from "./dom-handler.js";
 
 const router = {
   login: LoginPage,
   signup: SignupPage,
-  lists: ListPage,
+  tasks: TaskPage,
 };
 
 async function App() {
@@ -31,8 +31,8 @@ async function App() {
     const { token, ...user } = await getUser();
     STORE.setUser(user);
 
-    const lists = await getLists();
-    STORE.setLists(lists);
+    const tasks = await getTasks();
+    STORE.setTasks(tasks);
 
     module = router[STORE.currentPage];
   } catch (error) {

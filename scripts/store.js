@@ -3,7 +3,7 @@ import { fromLocalStorage, saveLocalStorage } from "./utils.js";
 const STORE = {
   currentPage: fromLocalStorage("current-page") || "login",
   user: null,
-  lists: [],
+  tasks: [],
   setUser(data) {
     this.user = data;
   },
@@ -11,25 +11,15 @@ const STORE = {
     saveLocalStorage("current-page", page);
     this.currentPage = page;
   },
-  setLists(data) {
-    this.lists = data;
+  setTasks(data) {
+    this.tasks = data;
   },
-  addCard(listId, card) {
-    const list = this.lists.find((list) => list.id === listId);
-    list.cards.push(card);
+  deleteTask(id) {
+    const newTasks = this.tasks.filter((task) => task.id !== id);
+    this.tasks = newTasks;
   },
-  deleteCard(listId, id) {
-    const list = this.lists.find((list) => list.id === listId);
-    const newCardList = list.cards.filter((card) => card.id !== id);
-
-    list.cards = newCardList;
-  },
-  deleteList(id) {
-    const newLists = this.lists.filter((list) => list.id !== id);
-    this.lists = newLists;
-  },
-  addList(list) {
-    this.lists.push(list);
+  addTask(task) {
+    this.tasks.push(task);
   },
 };
 

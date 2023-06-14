@@ -1,9 +1,9 @@
 import { input } from "../components/input.js";
 import { login } from "../services/session-service.js";
 import { tokenKey, root } from "../config.js";
-import { getLists } from "../services/lists-service.js";
+import { getTasks } from "../services/tasks-service.js";
 import DOMHandler from "../dom-handler.js";
-import ListPage from "./lists-page.js";
+import TaskPage from "./tasks-page.js";
 import STORE from "../store.js";
 import SignupPage from "./signup-page.js";
 
@@ -68,13 +68,13 @@ function listenSubmit() {
       sessionStorage.setItem(tokenKey, token);
 
       STORE.setUser(user);
-      STORE.setCurrentPage("lists");
+      STORE.setCurrentPage("tasks");
 
-      const lists = await getLists();
-      console.log(lists);
-      STORE.setLists(lists);
+      const tasks = await getTasks();
+      console.log(tasks);
+      STORE.setTasks(tasks);
 
-      DOMHandler.load(ListPage(), root);
+      DOMHandler.load(TaskPage(), root);
     } catch (error) {
       this.state.errors.form = error.message;
       DOMHandler.reload();

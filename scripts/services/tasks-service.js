@@ -1,8 +1,8 @@
 import { tokenKey, base_uri } from "../config.js";
 
-const listsKey = "trackable_list";
+const tasksKey = "trackable_task";
 
-export async function getLists() {
+export async function getTasks() {
   const token = sessionStorage.getItem(tokenKey);
 
   const response = await fetch(`${base_uri}/tasks`, {
@@ -23,32 +23,31 @@ export async function getLists() {
   return data;
 }
 
-export async function createList({ name }) {
-  const lists = await getLists();
+export async function createTask({ title, due_date }) {
+  const tasks = await getTasks();
 
-  if (!name)
+  if (!title)
     return Promise.reject(
-      new Error(JSON.stringify({ name: "can't be blank" }))
+      new Error(JSON.stringify({ title: "can't be blank" }))
     );
 
-  const newList = {
+  const newTask = {
     id: Date.now(),
-    name,
-    pos: getMaxPos(lists) + 1,
-    cards: [],
+    title,
+    due_date,
   };
 
-  lists.push(newList);
-  save(lists);
+  tasks.push(newTask);
+  save(tasks);
 
-  return Promise.resolve(newList);
+  return Promise.resolve(newTask);
 }
 
-export async function deleteList(id) {
-  const lists = await getLists();
+export async function deleteTask(id) {
+  const tasks = await getTasks();
 
-  const newLists = lists.filter((list) => list.id !== id);
-  save(newLists);
+  const newTasks = tasks.filter((task) => task.id !== id);
+  save(newTasks);
 
   return Promise.resolve(null);
 }
@@ -59,18 +58,18 @@ export async function deleteList(id) {
 // [356,234,123]
 
 // [{pos: 0}, {pos: 1}, {pos: 2} ]
-export async function updateListsOrder(idsInOrder) {
-  const lists = await getLists();
+export async function updateTasksOrder(idsInOrder) {
+  const tasks = await getTasks();
 
-  const newLists = idsInOrder.map((id, index) => {
-    const list = lists.find((list) => list.id === id);
-    list.pos = index;
+  const newTasks = idsInOrder.map((id, index) => {
+    const task = tasks.find((task) => task.id === id);
+    task.pos = index;
 
-    return list;
+    return task;
   });
 
-  save(newLists);
-  return Promise.resolve(newLists);
+  save(newTasks);
+  return Promise.resolve(newTasks);
 }
 
 export function getMaxPos(data) {
@@ -94,5 +93,5 @@ export function getMaxPos(data) {
 }
 
 export function save(data) {
-  localStorage.setItem(listsKey, JSON.stringify(data));
+  localStorage.setItem(tasksKey, JSON.stringify(data));
 }

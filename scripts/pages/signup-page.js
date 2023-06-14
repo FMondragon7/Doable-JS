@@ -1,11 +1,11 @@
 import DOMHandler from "../dom-handler.js";
-import ListPage from "./lists-page.js";
+import TaskPage from "./tasks-page.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
 import { tokenKey, root } from "../config.js";
 import { input } from "../components/input.js";
 import { createUser } from "../services/users-service.js";
-import { getLists } from "../services/lists-service.js";
+import { getTasks } from "../services/tasks-service.js";
 
 function render() {
   return `
@@ -66,12 +66,12 @@ function listenSubmit() {
       sessionStorage.setItem(tokenKey, token);
 
       STORE.setUser(user);
-      STORE.setCurrentPage("lists");
+      STORE.setCurrentPage("tasks");
 
-      const lists = await getLists();
-      STORE.setLists(lists);
+      const tasks = await getTasks();
+      STORE.setTasks(tasks);
 
-      DOMHandler.load(ListPage(), root);
+      DOMHandler.load(TaskPage(), root);
     } catch (error) {
       this.state.errors.form = error.message;
       DOMHandler.reload();

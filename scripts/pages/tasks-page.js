@@ -1,5 +1,5 @@
 import { tokenKey, root } from "../config.js";
-import { deleteList, createList } from "../services/lists-service.js";
+import { deleteTask, createTask } from "../services/tasks-service.js";
 import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
@@ -17,20 +17,20 @@ function renderHeader() {
   `;
 }
 
-function renderList(list) {
+function renderTask(task) {
   // const sortedCards = cards.sort(sortByPos);
 
   return `
-    <div class="list js-list" data-id="${list.id}">
-      <div class="list__header">
-        <h2 class="heading heading--xs">${list.title}</h2>
-        <img src="/assets/icons/trash.svg" alt="trash" class="js-list-trash" />
+    <div class="task js-task" data-id="${task.id}">
+      <div class="task__header">
+        <h2 class="heading heading--xs">${task.title}</h2>
+        <img src="/assets/icons/trash.svg" alt="trash" class="js-task-trash" />
       </div>
       <hr class="full-width m-0" />
-      <div class="card-list js-list-container" data-listName="${list.title}">
+      <div class="card-task js-task-container" data-taskName="${task.title}">
         
       </div>
-      <form action="" class="card-form js-card-form" data-list-id="${list.id}">
+      <form action="" class="card-form js-card-form" data-task-id="${task.id}">
         <input 
           type="text" 
           class="card-form__input" 
@@ -55,34 +55,55 @@ function renderList(list) {
 }
 
 function render() {
-  const lists = STORE.lists;
-  // const sortedList = lists.sort(sortByPos);
+  const tasks = STORE.tasks;
+  // const sortedTask = tasks.sort(sortByPos);
 
   return `
     ${renderHeader()}
-    <section
-      class="section-sm flex gap-8 items-start wrap js-lists-container"
-      data-listName="lists"
+    <main
+      class="section-sm flex gap-8 items-start wrap js-tasks-container"
+      data-taskName="tasks"
     >
+    <section class="flex-column flex">
+      <div class="flex gap-8">
+        <label class="container-sm">Sort</label>
+        <select name="sort" id="sort" class="select select__input">
+          <option>Alphabetical (a-z)</option>
+          <option>Due date</option>
+          <option>Importance</option>
+        </select>
+      </div>
+      <div class="p-y-3 flex gap-8">
+        <div class="flex">
+          <label class="container-sm">Show</label>
+        </div>
+        <div>
+          <input type="checkbox" name="pending" id="pending"></input>
+          <label for="pending">Only pending</label>
 
-      ${lists.map(renderList).join("")}
+          <input type="checkbox" name="important" id="important"></input>
+          <label for="important">Only important</label>
+        </div>
+      </div>
+    <section/>
 
-      <div class="list" data-id="form">
-        <form action="" class="task-form js-list-form">
+      ${tasks.map(renderTask).join("")}
+
+      <div class="task" data-id="form">
+        <form action="" class="task-form js-task-form">
           <input 
             type="text" 
             class="card-form__input" 
             placeholder="do the dishes.." 
-            id="name"
-            name="name"
+            id="title"
+            name="title"
             require
           />
           <input 
             type="date" 
             class="card-form__input" 
-            placeholder="mm / dd / yy" 
-            id="name"
-            name="name"
+            id="due_date"
+            name="due_date"
             require
           />
           <button 
@@ -98,7 +119,7 @@ function render() {
 }
 // render - END
 
-// Listeners - START
+// Taskeners - START
 
 function listenLogout() {
   const button = document.querySelector(".js-logout");
@@ -109,17 +130,17 @@ function listenLogout() {
   });
 }
 
-function listenListTrash() {
-  const listTrashes = document.querySelectorAll(".js-list-trash");
+function listenTaskTrash() {
+  const taskTrashes = document.querySelectorAll(".js-task-trash");
 
-  listTrashes.forEach((listTrash) => {
-    listTrash.addEventListener("click", async (event) => {
-      const list = event.target.closest(".js-list");
-      const listId = +list.dataset.id;
+  taskTrashes.forEach((taskTrash) => {
+    taskTrash.addEventListener("click", async (event) => {
+      const task = event.target.closest(".js-task");
+      const taskId = +task.dataset.id;
 
       try {
-        await deleteList(listId);
-        STORE.deleteList(listId);
+        await deleteTask(taskId);
+        STORE.deleteTask(taskId);
 
         DOMHandler.reload();
       } catch (error) {
@@ -130,16 +151,19 @@ function listenListTrash() {
 }
 
 function listenSubmitForm() {
-  const form = document.querySelector(".js-list-form");
+  const form = document.querySelector(".js-task-form");
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const { name } = event.target.elements;
+    const { title, due_date } = event.target.elements;
 
     try {
-      const list = await createList({ name: name.value });
-      STORE.addList(list);
+      const task = await createTask({
+        title: title.value,
+        due_date: due_date.value,
+      });
+      STORE.addTask(task);
 
       DOMHandler.reload();
     } catch (error) {
@@ -150,14 +174,14 @@ function listenSubmitForm() {
 
 // Listeners - END
 
-function ListPage() {
+function TaskPage() {
   return {
     toString() {
       return render.call(this);
     },
     addListeners() {
       listenLogout();
-      listenListTrash();
+      listenTaskTrash();
       listenSubmitForm();
     },
     state: {
@@ -166,4 +190,4 @@ function ListPage() {
   };
 }
 
-export default ListPage;
+export default TaskPage;

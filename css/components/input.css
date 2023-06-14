@@ -88,7 +88,7 @@
 .select__input {
   appearance: none;
   padding-right: 36px;
-  background-image: url("assets/icons/chevron-down.svg");
+  background-image: url("/assets/icons/chevron-down.svg");
   background-repeat: no-repeat;
   background-position-y: center;
   background-position-x: calc(100% - 8px);
