@@ -21,36 +21,21 @@ function renderTask(task) {
   // const sortedCards = cards.sort(sortByPos);
 
   return `
-    <div class="task js-task" data-id="${task.id}">
-      <div class="task__header">
-        <h2 class="heading heading--xs">${task.title}</h2>
-        <img src="/assets/icons/trash.svg" alt="trash" class="js-task-trash" />
-      </div>
-      <hr class="full-width m-0" />
-      <div class="card-task js-task-container" data-taskName="${task.title}">
-        
-      </div>
-      <form action="" class="card-form js-card-form" data-task-id="${task.id}">
-        <input 
-          type="text" 
-          class="card-form__input" 
-          placeholder="new card"
-          required
-          name="title"
-          id="title"
-        />
-        <button 
-          type="submit"
-          class="button button--secondary button--sm button--only-icon"
-        >
-          <img
-            src="/assets/icons/plus.svg"
-            alt="mail icon"
-            class="button__icon"
-          />
-        </button>
-      </form>
-    </div>
+  <div class="flex gap-8">
+    <input type="checkbox" id="${task.title}>
+    <div class="flex-column gap-2 js-task" data-id="${task.id}">
+                      <label for="${task.title}"class="heading heading--xs">${
+    task.title
+  }</label>
+                      <label class="task-content">${new Date(
+                        task.due_date
+                      ).toLocaleString("en-US", {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric",
+                      })}</label>
+    </div
+  </div>
   `;
 }
 
@@ -64,7 +49,7 @@ function render() {
       class="section-sm flex gap-8 items-start wrap js-tasks-container"
       data-taskName="tasks"
     >
-    <section class="flex-column flex">
+    <main class="flex-column flex">
       <div class="flex gap-8">
         <label class="container-sm">Sort</label>
         <select name="sort" id="sort" class="select select__input">
@@ -91,7 +76,7 @@ function render() {
 
       <div class="task" data-id="form">
         <form action="" class="task-form js-task-form">
-          <input 
+          <input
             type="text" 
             class="card-form__input" 
             placeholder="do the dishes.." 
@@ -104,7 +89,6 @@ function render() {
             class="card-form__input" 
             id="due_date"
             name="due_date"
-            require
           />
           <button 
             type="submit"
@@ -114,7 +98,7 @@ function render() {
           </button>
         </form>
       </div>
-    </section>
+    </main>
   `;
 }
 // render - END
