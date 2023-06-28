@@ -8,7 +8,6 @@ export async function getTasks() {
   const response = await fetch(`${base_uri}/tasks`, {
     method: "GET",
     headers: {
-      "Content-type": "application/json",
       Authorization: `Token token=${token}`,
     },
   });
@@ -24,23 +23,34 @@ export async function getTasks() {
 }
 
 export async function createTask({ title, due_date }) {
-  const tasks = await getTasks();
+  console.log(due_date);
+  const token = sessionStorage.getItem(tokenKey);
+
+  const response = await fetch(`${base_uri}/tasks`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token token=${token}`,
+    },
+    body: JSON.stringify({
+      title: title,
+      due_date: due_date,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error);
+  }
 
   if (!title)
     return Promise.reject(
       new Error(JSON.stringify({ title: "can't be blank" }))
     );
 
-  const newTask = {
-    id: Date.now(),
-    title,
-    due_date,
-  };
+  const data = await response.json();
 
-  tasks.push(newTask);
-  save(tasks);
-
-  return Promise.resolve(newTask);
+  return data;
 }
 
 export async function deleteTask(id) {

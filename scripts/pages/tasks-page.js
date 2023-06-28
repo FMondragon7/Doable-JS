@@ -21,20 +21,23 @@ function renderTask(task) {
   // const sortedCards = cards.sort(sortByPos);
 
   return `
-  <div class="flex gap-8">
-    <input type="checkbox" id="${task.title}>
-    <div class="flex-column gap-2 js-task" data-id="${task.id}">
-                      <label for="${task.title}"class="heading heading--xs">${
-    task.title
-  }</label>
-                      <label class="task-content">${new Date(
-                        task.due_date
-                      ).toLocaleString("en-US", {
-                        weekday: "long",
-                        month: "long",
-                        day: "numeric",
-                      })}</label>
-    </div
+  <div class="flex align-baseline justify-between">
+    <div class="flex align-baseline gap-2">
+      <input type="checkbox" id="${task.title}">
+      <div class="flex-column gap-2 js-task" data-id="${task.id}">
+        <p for="${task.title}" class="heading heading--xs">${task.title}</p>
+        <p class="task-content">${
+          task.due_date
+            ? new Date(task.due_date).toLocaleString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })
+            : ""
+        }</p>
+        </div>
+    </div>
+      <input type="checkbox" id="${task.title}-important">
   </div>
   `;
 }
@@ -103,7 +106,7 @@ function render() {
 }
 // render - END
 
-// Taskeners - START
+// Listeners - START
 
 function listenLogout() {
   const button = document.querySelector(".js-logout");
