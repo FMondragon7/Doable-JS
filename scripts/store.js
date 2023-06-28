@@ -21,6 +21,7 @@ const STORE = {
   addTask(task) {
     this.tasks.push(task);
   },
+  updateTask(task) {},
 };
 
 export default STORE;

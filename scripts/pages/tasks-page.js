@@ -1,5 +1,5 @@
 import { tokenKey, root } from "../config.js";
-import { deleteTask, createTask } from "../services/tasks-service.js";
+import { createTask, editTask } from "../services/tasks-service.js";
 import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
@@ -20,12 +20,18 @@ function renderHeader() {
 function renderTask(task) {
   // const sortedCards = cards.sort(sortByPos);
 
+  // <input type="checkbox" name="Task" id="${
+  //   task.id
+  // }"class="checkbox checkbox__input check" ${task.completed ? "checked" : ""} ></input>
+
   return `
   <div class="flex align-baseline justify-between">
-    <div class="flex align-baseline gap-2">
-      <input type="checkbox" id="${task.title}">
+    <div class="js-checkDone flex align-baseline gap-2" data-id="${task.id}">
+      <input class="js-check" type="checkbox" id="${task.id}" ${
+    task.completed ? "checked" : ""
+  }>
       <div class="flex-column gap-2 js-task" data-id="${task.id}">
-        <p for="${task.title}" class="heading heading--xs">${task.title}</p>
+        <p for="${task.id}" class="heading heading--xs">${task.title}</p>
         <p class="task-content">${
           task.due_date
             ? new Date(task.due_date).toLocaleString("en-US", {
@@ -117,26 +123,6 @@ function listenLogout() {
   });
 }
 
-function listenTaskTrash() {
-  const taskTrashes = document.querySelectorAll(".js-task-trash");
-
-  taskTrashes.forEach((taskTrash) => {
-    taskTrash.addEventListener("click", async (event) => {
-      const task = event.target.closest(".js-task");
-      const taskId = +task.dataset.id;
-
-      try {
-        await deleteTask(taskId);
-        STORE.deleteTask(taskId);
-
-        DOMHandler.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  });
-}
-
 function listenSubmitForm() {
   const form = document.querySelector(".js-task-form");
 
@@ -159,6 +145,25 @@ function listenSubmitForm() {
   });
 }
 
+function listenCheck() {
+  const listChecked = document.querySelectorAll(".js-check");
+
+  listChecked.forEach((task) => {
+    task.addEventListener("change", async (event) => {
+      const taskDone = event.target.closest(".js-checkDone");
+
+      if (!taskDone) return;
+      if (task.checked) {
+        const updatedTask = await editTask({ completed: true }, task.id);
+        // save it in STORE
+      } else {
+        const updatedTask = await editTask({ completed: false }, task.id);
+        // save it in STORE
+      }
+    });
+  });
+}
+
 // Listeners - END
 
 function TaskPage() {
@@ -168,8 +173,8 @@ function TaskPage() {
     },
     addListeners() {
       listenLogout();
-      listenTaskTrash();
       listenSubmitForm();
+      listenCheck();
     },
     state: {
       errors: {},

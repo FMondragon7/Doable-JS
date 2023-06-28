@@ -23,7 +23,6 @@ export async function getTasks() {
 }
 
 export async function createTask({ title, due_date }) {
-  console.log(due_date);
   const token = sessionStorage.getItem(tokenKey);
 
   const response = await fetch(`${base_uri}/tasks`, {
@@ -53,33 +52,26 @@ export async function createTask({ title, due_date }) {
   return data;
 }
 
-export async function deleteTask(id) {
-  const tasks = await getTasks();
+export async function editTask(updatedData, id) {
+  const token = sessionStorage.getItem(tokenKey);
 
-  const newTasks = tasks.filter((task) => task.id !== id);
-  save(newTasks);
-
-  return Promise.resolve(null);
-}
-
-// idsInOrder
-// [123,234,356]
-// [123,356,234]
-// [356,234,123]
-
-// [{pos: 0}, {pos: 1}, {pos: 2} ]
-export async function updateTasksOrder(idsInOrder) {
-  const tasks = await getTasks();
-
-  const newTasks = idsInOrder.map((id, index) => {
-    const task = tasks.find((task) => task.id === id);
-    task.pos = index;
-
-    return task;
+  const response = await fetch(`${base_uri}/tasks/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Token token=${token}`,
+    },
+    body: JSON.stringify(updatedData),
   });
 
-  save(newTasks);
-  return Promise.resolve(newTasks);
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error);
+  }
+
+  const data = await response.json();
+
+  return data;
 }
 
 export function getMaxPos(data) {
