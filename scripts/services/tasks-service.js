@@ -42,11 +42,6 @@ export async function createTask({ title, due_date }) {
     throw new Error(error);
   }
 
-  if (!title)
-    return Promise.reject(
-      new Error(JSON.stringify({ title: "can't be blank" }))
-    );
-
   const data = await response.json();
 
   return data;

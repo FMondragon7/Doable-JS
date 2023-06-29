@@ -87,9 +87,11 @@ function render() {
       </div>
     <section/>
 
+    <section class="tasks">
       ${tasks.map(renderTask).join("")}
+    </section>
 
-      <div class="task" data-id="form">
+      <div class="add-task" data-id="form">
         <form action="" class="task-form js-task-form">
           <input
             type="text" 
@@ -136,6 +138,10 @@ function listenSubmitForm() {
     event.preventDefault();
 
     const { title, due_date } = event.target.elements;
+
+    if (title.value.trim() === "") {
+      return; // Return if the title input is empty or contains only whitespace
+    }
 
     try {
       const task = await createTask({
