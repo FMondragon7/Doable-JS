@@ -71,7 +71,6 @@ function listenSubmit() {
       STORE.setCurrentPage("tasks");
 
       const tasks = await getTasks();
-      console.log(tasks);
       STORE.setTasks(tasks);
 
       DOMHandler.load(TaskPage(), root);

@@ -25,13 +25,17 @@ function renderTask(task) {
   // }"class="checkbox checkbox__input check" ${task.completed ? "checked" : ""} ></input>
 
   return `
-  <div class="flex align-baseline justify-between">
+  <div class="flex align-baseline justify-between js-checkImportant" data-id="${
+    task.id
+  }">
     <div class="js-checkDone flex align-baseline gap-2" data-id="${task.id}">
-      <input class="js-check" type="checkbox" id="${task.id}" ${
+      <input class="js-check" type="checkbox" id="${task.id}-checked" ${
     task.completed ? "checked" : ""
   }>
       <div class="flex-column gap-2 js-task" data-id="${task.id}">
-        <p for="${task.id}" class="heading heading--xs">${task.title}</p>
+        <p for="${task.id}-checked" class="heading heading--xs">${
+    task.title
+  }</p>
         <p class="task-content">${
           task.due_date
             ? new Date(task.due_date).toLocaleString("en-US", {
@@ -43,7 +47,9 @@ function renderTask(task) {
         }</p>
         </div>
     </div>
-      <input type="checkbox" id="${task.title}-important">
+      <input class="js-important" type="checkbox" id="${task.id}-important" ${
+    task.important ? "checked" : ""
+  }>
   </div>
   `;
 }
@@ -155,12 +161,51 @@ function listenCheck() {
       if (!taskDone) return;
       try {
         if (task.checked) {
-          const updatedTask = await editTask({ completed: true }, task.id);
+          const updatedTask = await editTask(
+            { completed: true },
+            taskDone.dataset.id
+          );
           STORE.updateTask(updatedTask);
 
           DOMHandler.reload();
         } else {
-          const updatedTask = await editTask({ completed: false }, task.id);
+          const updatedTask = await editTask(
+            { completed: false },
+            taskDone.dataset.id
+          );
+          STORE.updateTask(updatedTask);
+
+          DOMHandler.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+}
+
+function listenImportant() {
+  const listImportant = document.querySelectorAll(".js-important");
+
+  listImportant.forEach((task) => {
+    task.addEventListener("change", async (event) => {
+      const taskImportant = event.target.closest(".js-checkImportant");
+
+      if (!taskImportant) return;
+      try {
+        if (task.checked) {
+          const updatedTask = await editTask(
+            { important: true },
+            taskImportant.dataset.id
+          );
+          STORE.updateTask(updatedTask);
+
+          DOMHandler.reload();
+        } else {
+          const updatedTask = await editTask(
+            { important: false },
+            taskImportant.dataset.id
+          );
           STORE.updateTask(updatedTask);
 
           DOMHandler.reload();
@@ -183,6 +228,7 @@ function TaskPage() {
       listenLogout();
       listenSubmitForm();
       listenCheck();
+      listenImportant();
     },
     state: {
       errors: {},

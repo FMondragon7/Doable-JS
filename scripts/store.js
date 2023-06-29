@@ -32,6 +32,7 @@ const STORE = {
     ];
 
     this.tasks = updatedArray;
+    console.log(this.tasks);
   },
 };
 
