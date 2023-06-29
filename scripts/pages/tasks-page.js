@@ -153,12 +153,20 @@ function listenCheck() {
       const taskDone = event.target.closest(".js-checkDone");
 
       if (!taskDone) return;
-      if (task.checked) {
-        const updatedTask = await editTask({ completed: true }, task.id);
-        // save it in STORE
-      } else {
-        const updatedTask = await editTask({ completed: false }, task.id);
-        // save it in STORE
+      try {
+        if (task.checked) {
+          const updatedTask = await editTask({ completed: true }, task.id);
+          STORE.updateTask(updatedTask);
+
+          DOMHandler.reload();
+        } else {
+          const updatedTask = await editTask({ completed: false }, task.id);
+          STORE.updateTask(updatedTask);
+
+          DOMHandler.reload();
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
   });

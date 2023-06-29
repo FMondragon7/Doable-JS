@@ -21,7 +21,18 @@ const STORE = {
   addTask(task) {
     this.tasks.push(task);
   },
-  updateTask(task) {},
+  updateTask(updatedTask) {
+    const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
+    if (index === -1) return;
+
+    const updatedArray = [
+      ...this.tasks.slice(0, index),
+      updatedTask,
+      ...this.tasks.slice(index + 1),
+    ];
+
+    this.tasks = updatedArray;
+  },
 };
 
 export default STORE;
