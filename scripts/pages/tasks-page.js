@@ -33,9 +33,9 @@ function renderTask(task) {
     task.completed ? "checked" : ""
   }>
       <div class="flex-column gap-2 js-task" data-id="${task.id}">
-        <p for="${task.id}-checked" class="heading heading--xs">${
+        <label for="${task.id}-checked" class="heading heading--xs">${
     task.title
-  }</p>
+  }</label>
         <p class="task-content">${
           task.due_date
             ? new Date(task.due_date).toLocaleString("en-US", {
@@ -78,10 +78,14 @@ function render() {
           <label class="container-sm">Show</label>
         </div>
         <div>
-          <input type="checkbox" name="pending" id="pending"></input>
-          <label for="pending">Only pending</label>
+          <input class="js-pending" type="checkbox" name="pending" id="pending" ${
+            STORE.filter.pending ? "checked" : ""
+          }></input>
+          <label for="pending" >Only pending</label>
 
-          <input type="checkbox" name="important" id="important"></input>
+          <input class="js-important" type="checkbox" name="important" id="important" ${
+            STORE.filter.important ? "checked" : ""
+          }></input>
           <label for="important">Only important</label>
         </div>
       </div>
@@ -223,6 +227,22 @@ function listenImportant() {
   });
 }
 
+function listenOnlyPending() {
+  const tasksOnlyPending = document.querySelector(".js-pending");
+
+  tasksOnlyPending.addEventListener("change", function () {
+    STORE.setFilter("pending");
+  });
+}
+
+function listenOnlyImportant() {
+  const tasksOnlyImportant = document.querySelector(".js-important");
+
+  tasksOnlyImportant.addEventListener("change", function () {
+    STORE.setFilter("important");
+  });
+}
+
 // Listeners - END
 
 function TaskPage() {
@@ -235,6 +255,8 @@ function TaskPage() {
       listenSubmitForm();
       listenCheck();
       listenImportant();
+      listenOnlyPending();
+      listenOnlyImportant();
     },
     state: {
       errors: {},

@@ -4,12 +4,20 @@ const STORE = {
   currentPage: fromLocalStorage("current-page") || "login",
   user: null,
   tasks: [],
+  filter: {
+    pending: false,
+    important: false,
+  },
   setUser(data) {
     this.user = data;
   },
   setCurrentPage(page) {
     saveLocalStorage("current-page", page);
     this.currentPage = page;
+  },
+  setFilter(type) {
+    this.filter[type] = !this.filter[type];
+    console.log(STORE.filter);
   },
   setTasks(data) {
     this.tasks = data;
