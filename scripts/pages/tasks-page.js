@@ -61,13 +61,15 @@ function render() {
   return `
     ${renderHeader()}
     <main
-      class="section-sm flex gap-8 items-start wrap js-tasks-container"
+      class="section-sm flex items-start justify-center wrap js-tasks-container"
       data-taskName="tasks"
     >
     <main class="flex-column flex">
       <div class="flex gap-8">
         <label class="container-sm">Sort</label>
-        <select name="sort" id="sort" class="select select__input">
+        <select value="${
+          STORE.sort
+        }" name="sort" id="sort" class="select select__input js-select">
           <option>Alphabetical (a-z)</option>
           <option>Due date</option>
           <option>Importance</option>
@@ -243,6 +245,14 @@ function listenOnlyImportant() {
   });
 }
 
+function listenSort() {
+  const taskSort = document.querySelector(".js-select");
+
+  taskSort.addEventListener("change", () => {
+    STORE.setSort(taskSort.value);
+  });
+}
+
 // Listeners - END
 
 function TaskPage() {
@@ -257,6 +267,7 @@ function TaskPage() {
       listenImportant();
       listenOnlyPending();
       listenOnlyImportant();
+      listenSort();
     },
     state: {
       errors: {},

@@ -4,6 +4,7 @@ const STORE = {
   currentPage: fromLocalStorage("current-page") || "login",
   user: null,
   tasks: [],
+  sort: "Alphabetical (a-z)",
   filter: {
     pending: false,
     important: false,
@@ -17,7 +18,9 @@ const STORE = {
   },
   setFilter(type) {
     this.filter[type] = !this.filter[type];
-    console.log(STORE.filter);
+  },
+  setSort(value) {
+    this.sort = value;
   },
   setTasks(data) {
     this.tasks = data;
