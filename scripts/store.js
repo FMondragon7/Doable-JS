@@ -3,6 +3,7 @@ import { fromLocalStorage, saveLocalStorage } from "./utils.js";
 const STORE = {
   currentPage: fromLocalStorage("current-page") || "login",
   user: null,
+  unfilterTasks: [],
   tasks: [],
   sort: "Alphabetical (a-z)",
   filter: {
