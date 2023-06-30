@@ -18,6 +18,7 @@ function render() {
           ${input({
             label: "email",
             id: "username",
+            icon: "/assets/icons/user.svg",
             value: "fernando@hotmail.com",
             required: true,
             placeholder: "you@example.com",
@@ -25,6 +26,7 @@ function render() {
           ${input({
             label: "Password",
             id: "password",
+            icon: "/assets/icons/key.svg",
             required: true,
             value: "123456",
             type: "password",
