@@ -78,6 +78,7 @@ export function sortedList(allTasks) {
       });
       break;
     default:
+      return allTasks;
       break;
   }
 

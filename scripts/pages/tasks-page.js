@@ -57,7 +57,6 @@ function renderTask(task) {
 
 function render() {
   const tasks = STORE.tasks;
-  // const sortedTask = tasks.sort(sortByPos);
 
   return `
     ${renderHeader()}
@@ -68,12 +67,11 @@ function render() {
     <main class="flex-column flex">
       <div class="flex gap-8">
         <label class="container-sm">Sort</label>
-        <select value="${
-          STORE.sort
-        }" name="sort" id="sort" class="select select__input js-select">
-          <option>Alphabetical (a-z)</option>
-          <option>Due date</option>
-          <option>Importance</option>
+        <select name="sort" id="sort" class="select select__input js-select">
+          <option class="js-option" hidden selected disabled>Select one option</option>
+          <option class="js-option" value="Alphabetical (a-z)">Alphabetical (a-z)</option>
+          <option class="js-option" value="Due date">Due date</option>
+          <option class="js-option" value="Importance">Importance</option>
         </select>
       </div>
       <div class="p-y-3 flex gap-8">
@@ -179,7 +177,7 @@ function listenCheck() {
             taskDone.dataset.id
           );
           STORE.updateTask(updatedTask);
-          const filterTasks = filterList(STORE.unfilterTasks);
+          const filterTasks = filterList(STORE.grossFilterTasks);
           const sortedTasks = sortedList(filterTasks);
           STORE.setSortedTasks(sortedTasks);
 
@@ -190,7 +188,7 @@ function listenCheck() {
             taskDone.dataset.id
           );
           STORE.updateTask(updatedTask);
-          const filterTasks = filterList(STORE.unfilterTasks);
+          const filterTasks = filterList(STORE.grossFilterTasks);
           const sortedTasks = sortedList(filterTasks);
           STORE.setSortedTasks(sortedTasks);
 
@@ -218,7 +216,7 @@ function listenImportant() {
             taskImportant.dataset.id
           );
           STORE.updateTask(updatedTask);
-          const filterTasks = filterList(STORE.unfilterTasks);
+          const filterTasks = filterList(STORE.grossFilterTasks);
           const sortedTasks = sortedList(filterTasks);
           STORE.setSortedTasks(sortedTasks);
 
@@ -229,7 +227,7 @@ function listenImportant() {
             taskImportant.dataset.id
           );
           STORE.updateTask(updatedTask);
-          const filterTasks = filterList(STORE.unfilterTasks);
+          const filterTasks = filterList(STORE.grossFilterTasks);
           const sortedTasks = sortedList(filterTasks);
           STORE.setSortedTasks(sortedTasks);
 
@@ -248,7 +246,7 @@ function listenOnlyPending() {
   tasksOnlyPending.addEventListener("change", function () {
     STORE.setFilter("pending");
 
-    const filterTasks = filterList(STORE.unfilterTasks);
+    const filterTasks = filterList(STORE.grossFilterTasks);
     const sortedTasks = sortedList(filterTasks);
     STORE.setSortedTasks(sortedTasks);
 
@@ -262,7 +260,7 @@ function listenOnlyImportant() {
   tasksOnlyImportant.addEventListener("change", function () {
     STORE.setFilter("important");
 
-    const filterTasks = filterList(STORE.unfilterTasks);
+    const filterTasks = filterList(STORE.grossFilterTasks);
     const sortedTasks = sortedList(filterTasks);
     STORE.setSortedTasks(sortedTasks);
 
@@ -277,9 +275,8 @@ function listenSort() {
     const selectedOption = event.target.value;
     STORE.setSort(selectedOption);
 
-    const filterTasks = filterList(STORE.unfilterTasks);
+    const filterTasks = filterList(STORE.grossFilterTasks);
     const sortedTasks = sortedList(filterTasks);
-    console.log(sortedTasks);
     STORE.setSortedTasks(sortedTasks);
 
     DOMHandler.reload();

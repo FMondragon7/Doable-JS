@@ -53,6 +53,7 @@
   position: absolute;
   right: 1%;
   opacity: 50%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

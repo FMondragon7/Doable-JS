@@ -3,9 +3,9 @@ import { fromLocalStorage, saveLocalStorage } from "./utils.js";
 const STORE = {
   currentPage: fromLocalStorage("current-page") || "login",
   user: null,
-  unfilterTasks: [],
+  grossFilterTasks: [],
   tasks: [],
-  sort: "Alphabetical (a-z)",
+  sort: null,
   filter: {
     pending: false,
     important: false,
@@ -24,31 +24,31 @@ const STORE = {
     this.sort = value;
   },
   setTasks(data) {
-    this.unfilterTasks = data;
+    this.grossFilterTasks = data;
   },
   setSortedTasks(data) {
     this.tasks = data;
   },
   deleteTask(id) {
     const newTasks = this.tasks.filter((task) => task.id !== id);
-    this.unfilterTasks = newTasks;
+    this.grossFilterTasks = newTasks;
   },
   addTask(task) {
-    this.unfilterTasks.push(task);
+    this.grossFilterTasks.push(task);
   },
   updateTask(updatedTask) {
-    const index = this.unfilterTasks.findIndex(
+    const index = this.grossFilterTasks.findIndex(
       (task) => task.id === updatedTask.id
     );
     if (index === -1) return;
 
     const updatedArray = [
-      ...this.unfilterTasks.slice(0, index),
+      ...this.grossFilterTasks.slice(0, index),
       updatedTask,
-      ...this.unfilterTasks.slice(index + 1),
+      ...this.grossFilterTasks.slice(index + 1),
     ];
 
-    this.unfilterTasks = updatedArray;
+    this.grossFilterTasks = updatedArray;
   },
 };
 

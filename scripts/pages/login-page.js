@@ -65,15 +65,15 @@ function listenSubmit() {
     };
 
     try {
-      const { token, ...user } = await login(credentials);
+      const { token } = await login(credentials);
       sessionStorage.setItem(tokenKey, token);
 
-      STORE.setUser(user);
+      STORE.setUser(credentials);
       STORE.setCurrentPage("tasks");
 
       const tasks = await getTasks();
       STORE.setTasks(tasks);
-      const filterTasks = filterList(STORE.unfilterTasks);
+      const filterTasks = filterList(STORE.grossFilterTasks);
       const sortedTasks = sortedList(filterTasks);
       STORE.setSortedTasks(sortedTasks);
 

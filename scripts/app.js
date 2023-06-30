@@ -1,6 +1,6 @@
 import { tokenKey, root } from "./config.js";
-import { getUser } from "./services/users-service.js";
 import { getTasks } from "./services/tasks-service.js";
+import { sortedList, filterList } from "./utils.js";
 import STORE from "./store.js";
 import LoginPage from "./pages/login-page.js";
 import SignupPage from "./pages/signup-page.js";
@@ -28,12 +28,9 @@ async function App() {
   }
 
   try {
-    const { token, ...user } = await getUser();
-    STORE.setUser(user);
-
     const tasks = await getTasks();
     STORE.setTasks(tasks);
-    const filterTasks = filterList(STORE.unfilterTasks);
+    const filterTasks = filterList(STORE.grossFilterTasks);
     const sortedTasks = sortedList(filterTasks);
     STORE.setSortedTasks(sortedTasks);
 

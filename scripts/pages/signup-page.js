@@ -71,7 +71,7 @@ function listenSubmit() {
 
       const tasks = await getTasks();
       STORE.setTasks(tasks);
-      const filterTasks = filterList(STORE.unfilterTasks);
+      const filterTasks = filterList(STORE.grossFilterTasks);
       const sortedTasks = sortedList(filterTasks);
       STORE.setSortedTasks(sortedTasks);
 

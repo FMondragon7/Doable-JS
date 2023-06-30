@@ -69,26 +69,6 @@ export async function editTask(updatedData, id) {
   return data;
 }
 
-export function getMaxPos(data) {
-  // Math.max(...data.map(elemento => elemento.pos))
-  // retorna un solo valor
-
-  // Reduzca a un solo valor.
-  return data.reduce(
-    // acc => prev = -1
-    // current.pos = 1 => prev < current.post
-    // => prev = 1
-
-    // prev = 1
-    // current.pos = 0 => prev < current.post
-    // prev = 1
-    (prev, current) => (prev < current.pos ? current.pos : prev),
-    -1
-  );
-
-  // return 1
-}
-
 export function save(data) {
   localStorage.setItem(tasksKey, JSON.stringify(data));
 }
