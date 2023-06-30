@@ -24,27 +24,31 @@ const STORE = {
     this.sort = value;
   },
   setTasks(data) {
+    this.unfilterTasks = data;
+  },
+  setSortedTasks(data) {
     this.tasks = data;
   },
   deleteTask(id) {
     const newTasks = this.tasks.filter((task) => task.id !== id);
-    this.tasks = newTasks;
+    this.unfilterTasks = newTasks;
   },
   addTask(task) {
-    this.tasks.push(task);
+    this.unfilterTasks.push(task);
   },
   updateTask(updatedTask) {
-    const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
+    const index = this.unfilterTasks.findIndex(
+      (task) => task.id === updatedTask.id
+    );
     if (index === -1) return;
 
     const updatedArray = [
-      ...this.tasks.slice(0, index),
+      ...this.unfilterTasks.slice(0, index),
       updatedTask,
-      ...this.tasks.slice(index + 1),
+      ...this.unfilterTasks.slice(index + 1),
     ];
 
-    this.tasks = updatedArray;
-    console.log(this.tasks);
+    this.unfilterTasks = updatedArray;
   },
 };
 

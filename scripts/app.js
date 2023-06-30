@@ -33,6 +33,9 @@ async function App() {
 
     const tasks = await getTasks();
     STORE.setTasks(tasks);
+    const filterTasks = filterList(STORE.unfilterTasks);
+    const sortedTasks = sortedList(filterTasks);
+    STORE.setSortedTasks(sortedTasks);
 
     module = router[STORE.currentPage];
   } catch (error) {

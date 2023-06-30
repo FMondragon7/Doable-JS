@@ -1,5 +1,6 @@
 import { tokenKey, root } from "../config.js";
 import { createTask, editTask } from "../services/tasks-service.js";
+import { sortedList, filterList } from "../utils.js";
 import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
@@ -178,6 +179,9 @@ function listenCheck() {
             taskDone.dataset.id
           );
           STORE.updateTask(updatedTask);
+          const filterTasks = filterList(STORE.unfilterTasks);
+          const sortedTasks = sortedList(filterTasks);
+          STORE.setSortedTasks(sortedTasks);
 
           DOMHandler.reload();
         } else {
@@ -186,6 +190,9 @@ function listenCheck() {
             taskDone.dataset.id
           );
           STORE.updateTask(updatedTask);
+          const filterTasks = filterList(STORE.unfilterTasks);
+          const sortedTasks = sortedList(filterTasks);
+          STORE.setSortedTasks(sortedTasks);
 
           DOMHandler.reload();
         }
@@ -211,6 +218,9 @@ function listenImportant() {
             taskImportant.dataset.id
           );
           STORE.updateTask(updatedTask);
+          const filterTasks = filterList(STORE.unfilterTasks);
+          const sortedTasks = sortedList(filterTasks);
+          STORE.setSortedTasks(sortedTasks);
 
           DOMHandler.reload();
         } else {
@@ -219,6 +229,9 @@ function listenImportant() {
             taskImportant.dataset.id
           );
           STORE.updateTask(updatedTask);
+          const filterTasks = filterList(STORE.unfilterTasks);
+          const sortedTasks = sortedList(filterTasks);
+          STORE.setSortedTasks(sortedTasks);
 
           DOMHandler.reload();
         }
@@ -234,6 +247,12 @@ function listenOnlyPending() {
 
   tasksOnlyPending.addEventListener("change", function () {
     STORE.setFilter("pending");
+
+    const filterTasks = filterList(STORE.unfilterTasks);
+    const sortedTasks = sortedList(filterTasks);
+    STORE.setSortedTasks(sortedTasks);
+
+    DOMHandler.reload();
   });
 }
 
@@ -242,14 +261,28 @@ function listenOnlyImportant() {
 
   tasksOnlyImportant.addEventListener("change", function () {
     STORE.setFilter("important");
+
+    const filterTasks = filterList(STORE.unfilterTasks);
+    const sortedTasks = sortedList(filterTasks);
+    STORE.setSortedTasks(sortedTasks);
+
+    DOMHandler.reload();
   });
 }
 
 function listenSort() {
   const taskSort = document.querySelector(".js-select");
 
-  taskSort.addEventListener("change", () => {
-    STORE.setSort(taskSort.value);
+  taskSort.addEventListener("change", (event) => {
+    const selectedOption = event.target.value;
+    STORE.setSort(selectedOption);
+
+    const filterTasks = filterList(STORE.unfilterTasks);
+    const sortedTasks = sortedList(filterTasks);
+    console.log(sortedTasks);
+    STORE.setSortedTasks(sortedTasks);
+
+    DOMHandler.reload();
   });
 }
 

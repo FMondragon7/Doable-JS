@@ -2,6 +2,7 @@ import { input } from "../components/input.js";
 import { login } from "../services/session-service.js";
 import { tokenKey, root } from "../config.js";
 import { getTasks } from "../services/tasks-service.js";
+import { sortedList, filterList } from "../utils.js";
 import DOMHandler from "../dom-handler.js";
 import TaskPage from "./tasks-page.js";
 import STORE from "../store.js";
@@ -72,6 +73,9 @@ function listenSubmit() {
 
       const tasks = await getTasks();
       STORE.setTasks(tasks);
+      const filterTasks = filterList(STORE.unfilterTasks);
+      const sortedTasks = sortedList(filterTasks);
+      STORE.setSortedTasks(sortedTasks);
 
       DOMHandler.load(TaskPage(), root);
     } catch (error) {
