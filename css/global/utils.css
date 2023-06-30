@@ -78,6 +78,10 @@
   justify-content: center;
 }
 
+.align-baseline {
+  align-items: baseline;
+}
+
 .block {
   display: block;
 }
@@ -140,8 +144,4 @@
 .p-y-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.align-baseline {
-  align-items: baseline;
 }

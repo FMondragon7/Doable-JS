@@ -132,6 +132,12 @@
   cursor: pointer;
 }
 
+.checkbox__input:focus {
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--primary-300);
+  outline: none;
+}
+
 .radio-button__help-text {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -163,7 +169,7 @@
   animation: tick 250ms ease-in forwards;
   background-color: var(--primary-300);
   border: 1px solid var(--primary-300);
-  background-image: url("assets/icons/check.svg");
+  background-image: url("../../assets/icons/check.svg");
   background-repeat: no-repeat;
   background-position: center;
 }

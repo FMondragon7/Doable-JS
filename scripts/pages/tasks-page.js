@@ -21,9 +21,9 @@ function renderTask(task) {
     task.id
   }">
     <div class="js-checkDone flex align-baseline gap-2" data-id="${task.id}">
-      <input class="js-check" type="checkbox" id="${task.id}-checked" ${
-    task.completed ? "checked" : ""
-  }>
+      <input class="js-check checkbox__input" type="checkbox" id="${
+        task.id
+      }-checked" ${task.completed ? "checked" : ""}>
       <div class="flex-column gap-2 js-task" data-id="${task.id}">
         <label for="${task.id}-checked" class="heading heading--xs">${
     task.title
@@ -39,9 +39,9 @@ function renderTask(task) {
         }</p>
         </div>
     </div>
-      <input class="js-important" type="checkbox" id="${task.id}-important" ${
-    task.important ? "checked" : ""
-  }>
+      <input class="js-important checkbox__input" type="checkbox" id="${
+        task.id
+      }-important" ${task.important ? "checked" : ""}>
   </div>
   `;
 }
@@ -70,12 +70,12 @@ function render() {
           <label class="container-sm">Show</label>
         </div>
         <div>
-          <input class="js-pending" type="checkbox" name="pending" id="pending" ${
+          <input class="js-pending checkbox__input" type="checkbox" name="pending" id="pending" ${
             STORE.filter.pending ? "checked" : ""
           }></input>
           <label for="pending" >Only pending</label>
 
-          <input class="js-important" type="checkbox" name="important" id="important" ${
+          <input class="js-important checkbox__input" type="checkbox" name="important" id="important" ${
             STORE.filter.important ? "checked" : ""
           }></input>
           <label for="important">Only important</label>
