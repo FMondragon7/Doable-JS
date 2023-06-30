@@ -46,15 +46,15 @@ function render() {
 }
 
 function listenSubmit() {
-  // Encuentro el punto de referencia
+  // Find reference point
   const form = document.querySelector(".js-signup-form");
 
-  // Agrego oyentes de Eventos!
-  // Declaro el evento que quiero escuchar
+  // Add listeners!
+  // Declare which event I want to listen
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    // Opero los valores que capture del evento.
+    // Operate values from event captured.
     const { username, password } = event.target.elements;
 
     const credentials = {

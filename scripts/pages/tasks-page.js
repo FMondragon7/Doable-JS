@@ -5,9 +5,6 @@ import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
 
-// const sortByPos = (a, b) => a.pos - b.pos;
-// const sortByID = (a, b) => a.id - b.id
-
 // render - START
 function renderHeader() {
   return `
@@ -19,12 +16,6 @@ function renderHeader() {
 }
 
 function renderTask(task) {
-  // const sortedCards = cards.sort(sortByPos);
-
-  // <input type="checkbox" name="Task" id="${
-  //   task.id
-  // }"class="checkbox checkbox__input check" ${task.completed ? "checked" : ""} ></input>
-
   return `
   <div class="flex align-baseline justify-between js-checkImportant" data-id="${
     task.id
