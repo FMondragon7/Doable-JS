@@ -19,5 +19,26 @@
 
 .tasks {
   width: auto;
-  min-height:300px;
+  height:300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Scrollbar CSS */
+
+.tasks::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tasks::-webkit-scrollbar-thumb {
+  background-color: var(--gray-300);
+  border-radius: 5px;
+}
+
+.tasks::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-400);
+}
+
+.tasks::-webkit-scrollbar-track {
+  background-color: var(--gray-100);
 }
