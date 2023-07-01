@@ -32,7 +32,7 @@ function renderTask(task) {
   }</label>
         <p class="${
           task.completed ? "opacity-50" : ""
-        } task-content gray-300">${
+        } task-content secondary-400">${
     task.due_date
       ? new Date(task.due_date).toLocaleString("en-US", {
           weekday: "long",
