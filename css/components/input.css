@@ -148,6 +148,17 @@
   border-radius: 4px;
 }
 
+.checkbox__important {
+  width: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: var(--primary-100);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../../assets/icons/exclamation-false.svg");
+  border: none;
+}
+
 .radio-button__input:checked {
   border: 4px solid var(--primary-300);
   animation: radio-tick 200ms ease-in;
@@ -167,11 +178,16 @@
 
 .checkbox__input:checked {
   animation: tick 250ms ease-in forwards;
-  background-color: var(--primary-300);
-  border: 1px solid var(--primary-300);
+  background-color: var(--primary-400);
+  border: 1px solid var(--primary-400);
   background-image: url("../../assets/icons/check.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.checkbox__important:checked {
+  background-color: var(--primary-100);
+  background-image: url("../../assets/icons/exclamation-true.svg");
 }
 
 @keyframes tick {

@@ -44,8 +44,8 @@ function renderTask(task) {
         </div>
     </div>
       <input class="${
-        task.completed ? "opacity-50" : ""
-      } js-important checkbox__input" type="checkbox" id="${
+        task.completed && task.important ? "opacity-50" : ""
+      } js-important checkbox__input checkbox__important" type="checkbox" id="${
     task.id
   }-important" ${task.important ? "checked" : ""}>
   </div>
