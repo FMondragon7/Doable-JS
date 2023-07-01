@@ -19,7 +19,7 @@ function render() {
             label: "email",
             id: "username",
             icon: "/assets/icons/user.svg",
-            value: "fernando@hotmail.com",
+            value: "fernando@hotmail.com", //?Remove if deploy
             required: true,
             placeholder: "you@example.com",
           })}
@@ -28,7 +28,7 @@ function render() {
             id: "password",
             icon: "/assets/icons/key.svg",
             required: true,
-            value: "123456",
+            value: "123456", //?Remove if deploy
             type: "password",
             placeholder: "******",
           })}

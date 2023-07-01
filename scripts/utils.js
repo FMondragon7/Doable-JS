@@ -78,9 +78,25 @@ export function sortedList(allTasks) {
       });
       break;
     default:
-      return allTasks;
+      sortedList = allTasks;
       break;
   }
 
   return sortedList;
+}
+
+export function tasksSection(renderTask, tasks) {
+  if (tasks.length === 0) {
+    return `
+      <section class="tasks no-tasks">
+        <h3 class="">Starting adding your tasks!</h3>
+      </section>
+    `;
+  } else {
+    return `
+      <section class="tasks">
+        ${tasks.map(renderTask).join("")}
+      </section>
+    `;
+  }
 }

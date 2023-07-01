@@ -1,6 +1,6 @@
 import { tokenKey, root } from "../config.js";
 import { createTask, editTask } from "../services/tasks-service.js";
-import { sortedList, filterList } from "../utils.js";
+import { sortedList, filterList, tasksSection } from "../utils.js";
 import DOMHandler from "../dom-handler.js";
 import LoginPage from "./login-page.js";
 import STORE from "../store.js";
@@ -97,9 +97,7 @@ function render() {
       </div>
     <section/>
 
-    <section class="tasks">
-      ${tasks.map(renderTask).join("")}
-    </section>
+      ${tasksSection(renderTask, tasks)}
 
       <div class="add-task" data-id="form">
         <form action="" class="task-form js-task-form">

@@ -24,6 +24,17 @@
   padding-right: 10px;
 }
 
+.no-tasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-tasks h3 {
+  color: var(--primary-300);
+  font-size: 20px;
+}
+
 /* Scrollbar CSS */
 
 .tasks::-webkit-scrollbar {
