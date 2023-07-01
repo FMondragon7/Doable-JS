@@ -59,10 +59,18 @@ function render() {
       <div class="flex gap-8">
         <label class="container-sm">Sort</label>
         <select name="sort" id="sort" class="select select__input js-select">
-          <option class="js-option" hidden selected disabled>Select one option</option>
-          <option class="js-option" value="Alphabetical (a-z)">Alphabetical (a-z)</option>
-          <option class="js-option" value="Due date">Due date</option>
-          <option class="js-option" value="Importance">Importance</option>
+          <option class="js-option" hidden ${
+            STORE.sort === null ? "selected" : ""
+          } disabled>Select one option</option>
+          <option class="js-option" value="Alphabetical (a-z)" ${
+            STORE.sort === "Alphabetical (a-z)" ? "selected" : ""
+          }>Alphabetical (a-z)</option>
+          <option class="js-option" value="Due date" ${
+            STORE.sort === "Due date" ? "selected" : ""
+          }>Due date</option>
+          <option class="js-option" value="Importance" ${
+            STORE.sort === "Importance" ? "selected" : ""
+          }>Importance</option>
         </select>
       </div>
       <div class="p-y-3 flex gap-8">
