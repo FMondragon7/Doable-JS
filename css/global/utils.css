@@ -36,6 +36,14 @@
   color: var(--gray-300);
 }
 
+.gray-400 {
+  color: var(--gray-400);
+}
+
+.opacity-50 {
+  opacity: 50%;
+}
+
 .error-300 {
   color: var(--error-300);
 }

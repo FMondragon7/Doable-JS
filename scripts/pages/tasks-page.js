@@ -24,24 +24,30 @@ function renderTask(task) {
       <input class="js-check checkbox__input" type="checkbox" id="${
         task.id
       }-checked" ${task.completed ? "checked" : ""}>
-      <div class="flex-column gap-2 js-task" data-id="${task.id}">
+      <div class="${
+        task.completed ? "opacity-50" : ""
+      } flex-column gap-2 gray-400 js-task" data-id="${task.id}">
         <label for="${task.id}-checked" class="heading heading--xs">${
     task.title
   }</label>
-        <p class="task-content">${
-          task.due_date
-            ? new Date(task.due_date).toLocaleString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })
-            : ""
-        }</p>
+        <p class="${
+          task.completed ? "opacity-50" : ""
+        } task-content gray-300">${
+    task.due_date
+      ? new Date(task.due_date).toLocaleString("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+        })
+      : ""
+  }</p>
         </div>
     </div>
-      <input class="js-important checkbox__input" type="checkbox" id="${
-        task.id
-      }-important" ${task.important ? "checked" : ""}>
+      <input class="${
+        task.completed ? "opacity-50" : ""
+      } js-important checkbox__input" type="checkbox" id="${
+    task.id
+  }-important" ${task.important ? "checked" : ""}>
   </div>
   `;
 }
