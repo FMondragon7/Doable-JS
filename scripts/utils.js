@@ -100,3 +100,9 @@ export function tasksSection(renderTask, tasks) {
     `;
   }
 }
+
+export function FilterTasks(allTasks) {
+  const filterTasks = filterList(allTasks);
+  const sortedTasks = sortedList(filterTasks);
+  STORE.setSortedTasks(sortedTasks);
+}

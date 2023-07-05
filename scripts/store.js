@@ -30,7 +30,7 @@ const STORE = {
     this.tasks = data;
   },
   deleteTask(id) {
-    const newTasks = this.tasks.filter((task) => task.id !== id);
+    const newTasks = this.grossFilterTasks.filter((task) => task.id !== id);
     this.grossFilterTasks = newTasks;
   },
   addTask(task) {
